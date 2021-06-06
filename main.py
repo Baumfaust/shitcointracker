@@ -2,13 +2,16 @@ from collections import defaultdict
 from bscscan import BscScan
 from datetime import datetime 
 from pythonpancakes import PancakeSwapAPI
-import time
+import configparser
+
+cfg = configparser.ConfigParser()
+cfg.read('config.cfg')
+
+API_KEY = cfg.get('CONFIG', 'api_key', raw='')
+ADR = cfg.get('CONFIG', 'adr', raw='')
+
+
 ps = PancakeSwapAPI()
-
-API_KEY = "YOUR_KEY"
-ADR = 'YOUR_ADDRESS'
-
-
 mydict = {k: str(v).encode("utf-8") for k,v in ps.pairs().items()}
 
 all_tokens = {}
@@ -16,9 +19,8 @@ for k, v in ps.tokens()['data'].items():
 
     all_tokens[k.lower()] = v
 
-bsc = BscScan(API_KEY)
-balance = bsc.get_bnb_balance(address=ADR)
-
+with BscScan(API_KEY, asynchronous=False) as bsc:
+    balance = bsc.get_bnb_balance(address=ADR)
 
 transfers = bsc.get_bep20_token_transfer_events_by_address(address=ADR,startblock=0,endblock=9999999999999,sort="asc" )
 normals = bsc.get_normal_txs_by_address(address=ADR,startblock=0,endblock=9999999999999,sort="asc" )
