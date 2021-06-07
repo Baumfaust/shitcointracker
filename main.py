@@ -4,14 +4,19 @@ from datetime import datetime
 from pythonpancakes import PancakeSwapAPI
 import configparser
 
+
 cfg = configparser.ConfigParser()
 cfg.read('config.cfg')
+
 
 API_KEY = cfg.get('CONFIG', 'api_key', raw='')
 ADR = cfg.get('CONFIG', 'adr', raw='')
 
 ps = PancakeSwapAPI()
-mydict = {k: str(v).encode("utf-8") for k, v in ps.pairs().items()}
+
+
+mydict = {k: str(v).encode("utf-8") for k,v in ps.pairs().items()}
+
 
 all_tokens = {}
 for k, v in ps.tokens()['data'].items():
