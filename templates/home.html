@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- Favicon -->
+    <!--link rel="shortcut icon" href="{{url_for('static', filename='images/favicon.ico')}}"-->
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script type = "text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script type = "text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type = "text/javascript"  src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Datatable -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+    <script type = "text/javascript"  src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type = "text/javascript"  src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type = "text/javascript"  src="https://cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
+  </head>
+  <body>
+    <div class="card">
+      <div class="card-body">
+        <form method="post">
+          <textarea class="form-control" rows="1" name="address">{{address}}</textarea>
+          <button class="btn btn-success mt-2">Enter adress</button>
+        </form>
+        <div class="mt-4">
+          {% if request.method == 'POST'%}
+            BNB spent:
+            <label class="form-control" name="bnb_spent">{{bnb_spent}}</label>
+            Total tolen value in BNB:
+            <label class="form-control" name="bnb_value">{{bnb_value}}</label>
+            <table id="proxies" class="display table nowrap responsive" style="width: 100%">
+              <thead>
+                <tr>
+                  {% for header in fieldnames %}
+                    <th>{{header}}</th>
+                  {% endfor %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for key, value in results.items() %}
+                <tr>
+                  <td>{{key}}</td>
+                  {% for col in value %}
+                  <td>{{col}}</td>
+                  {% endfor %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    If you like what you see, you can support me and send BNB to: 0x5e59439E2Fc0966fA9F452F69337076b464B8c3B
+  </body>
+  <script type="text/javascript">
+    $('#proxies').DataTable();
+  </script>
+  
+</html>
+
+
+
+
+
+
